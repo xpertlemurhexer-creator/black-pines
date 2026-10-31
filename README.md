@@ -4,7 +4,7 @@ A hardcore survival horror game set in a forest at night, playable in the browse
 
 Find the five videotapes and bring them to the VCR at Ranger Station 4, while something in the trees tests how you react and learns how to hunt you.
 
-Headphones recommended. Use a desktop browser with a keyboard and mouse.
+Headphones recommended. Plays with keyboard and mouse on a computer, or with on-screen touch controls on phones and tablets. Hold touch devices sideways.
 
 ## Controls
 

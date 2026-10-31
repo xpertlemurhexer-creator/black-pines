@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>Black Pines</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -62,6 +65,34 @@ label{color:var(--dim);font-size:16px}
 #osd div{position:absolute}#osd .tl{left:5%;top:6%}#osd .bl{left:5%;bottom:7%}#osd .br{right:5%;bottom:7%;text-align:right}#osd .tr{right:5%;top:6%}
 .report{font-family:'VT323',monospace;font-size:21px;line-height:1.3;color:#cfe0c8;text-align:left;border:1px solid var(--line);padding:12px 16px;margin:16px 0;letter-spacing:.04em}
 #osd .rec::before{content:'●';color:#ff2a2a;margin-right:.3em}
+#tc,#panelX,#touchHelp{display:none}
+body.touch{position:fixed;inset:0;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+body.touch #game canvas{touch-action:none}
+body.touch .screen,body.touch #panel,body.touch #note .paper{touch-action:pan-y;-webkit-overflow-scrolling:touch}
+body.touch .screen{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.screen>.box{margin:auto}
+body.touch .keys{display:none}body.touch #touchHelp{display:block;color:var(--dim);font-size:17px;line-height:1.45;margin-top:18px}
+body.touch #dot{background:rgba(255,255,255,.4)}
+body.touch #msg{bottom:auto;top:17%;font-size:clamp(17px,4.4vw,22px)}
+body.touch #prompt{top:60%;font-size:16px;color:rgba(235,230,215,.85);padding:0 90px;box-sizing:border-box}
+body.touch #compass{left:50%;bottom:calc(10px + env(safe-area-inset-bottom));width:104px;height:104px;margin-left:-52px}
+body.touch button{min-height:44px;touch-action:manipulation}body.touch button.sm{font-size:15px;padding:8px 12px;margin:3px 5px 3px 0;min-height:38px}
+body.touch #panel{padding:max(60px,calc(52px + env(safe-area-inset-top))) max(16px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+body.touch #panel.on~#panelX{display:block;position:fixed;top:max(8px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));z-index:9;background:#000;margin:0}
+body.touch.play #tc{display:block;position:fixed;inset:0;pointer-events:none;z-index:6;font-family:'Special Elite',monospace;--sl:max(14px,env(safe-area-inset-left));--sr:max(14px,env(safe-area-inset-right));--sb:max(14px,env(safe-area-inset-bottom));--st:max(10px,env(safe-area-inset-top))}
+#tc button{pointer-events:auto;touch-action:none;margin:0;padding:0;min-height:0;border-radius:50%;background:rgba(0,0,0,.34);border:1px solid rgba(230,225,210,.3);color:rgba(235,230,215,.82);font-size:12px;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;width:60px;height:60px}
+#tc button.on{background:rgba(220,210,185,.3);border-color:rgba(235,230,215,.8);color:#fff}
+#tc button:active{background:rgba(220,210,185,.36)}
+#tcTop{position:absolute;top:var(--st);right:var(--sr);display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:calc(100% - 92px)}
+#tc #tcTop button{width:46px;height:46px;font-size:10px}
+#tc #tP{position:absolute;top:var(--st);left:var(--sl);width:46px;height:46px;font-size:13px}
+#tcAct{position:absolute;right:var(--sr);bottom:var(--sb);display:grid;grid-template-columns:repeat(3,60px);grid-template-rows:60px 84px;gap:8px;justify-items:center;align-items:center}
+#tc #tH{grid-column:2/4;grid-row:2;justify-self:end;width:84px;height:84px;font-size:14px;border-color:rgba(200,120,105,.55)}
+#tc #tU{grid-column:1;grid-row:2}
+#tc #tU.ready{border-color:#efe6cf;color:#fff;background:rgba(220,210,185,.2)}
+#tcBase{position:fixed;left:0;top:0;width:120px;height:120px;margin:-60px;border-radius:50%;border:1px solid rgba(230,225,210,.25);background:rgba(0,0,0,.18);--bx:calc(var(--sl) + 66px);--by:calc(100vh - var(--sb) - 66px);transform:translate(var(--bx),var(--by))}
+#tcKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px;border-radius:50%;background:rgba(225,218,200,.3);border:1px solid rgba(235,230,215,.45)}
+@media (max-height:400px){#tcAct{grid-template-columns:repeat(3,52px);grid-template-rows:52px 72px;gap:6px}#tc #tcAct button{width:52px;height:52px}#tc #tcAct #tH{width:72px;height:72px}#tc #tcTop button{width:42px;height:42px}}
 </style>
 </head>
 <body>
@@ -77,6 +108,13 @@ label{color:var(--dim);font-size:16px}
 <div id="fade"></div>
 
 <div id="panel"></div>
+<button id="panelX">✕ Close</button>
+<div id="tc">
+  <div id="tcBase"><div id="tcKnob"></div></div>
+  <button id="tP" aria-label="Pause">❚❚</button>
+  <div id="tcTop"><button data-k="Swap" aria-label="Switch weapon">SWAP</button><button data-k="KeyB" aria-label="Swap batteries">BATT</button><button data-k="KeyR" aria-label="Fill bottle">FILL</button><button data-k="KeyZ" aria-label="Sleep">SLEEP</button><button data-t="KeyG" aria-label="Hold compass">COMP</button><button data-k="Tab" aria-label="Open pack">PACK</button></div>
+  <div id="tcAct"><button data-t="KeyC" aria-label="Crouch">DUCK</button><button data-t="ShiftLeft" aria-label="Run">RUN</button><button data-k="KeyF" aria-label="Flashlight">LIGHT</button><button id="tU" data-k="KeyE" aria-label="Use">USE</button><button id="tH" aria-label="Attack">STRIKE</button></div>
+</div>
 <div id="note"><div class="paper" id="notePaper"></div></div>
 
 <div class="screen on" id="title"><div class="box">
@@ -91,6 +129,7 @@ label{color:var(--dim);font-size:16px}
     <label>Look &nbsp;<select id="optLook"><option value="0">Realistic</option><option value="1">VHS tape</option><option value="2">Camcorder · night vision</option></select></label>
     <label title="Turn off to playtest survival only"><input type="checkbox" id="optMon" checked> The Watcher (monster)</label>
   </div>
+  <p id="touchHelp">Drag the left side of the screen to walk and the right side to look. USE takes and interacts, PACK opens crafting and saving. Hold your device sideways and wear headphones. On iPhone, turn off silent mode to hear the game.</p>
   <div class="keys">
     <b>W A S D</b><span>move · <b style="font-size:14px">Shift</b> run · <b style="font-size:14px">C</b> crouch (quiet)</span>
     <b>Mouse</b><span>look · click to strike / shoot</span>
@@ -146,7 +185,9 @@ function vnoise(x,z){const xi=Math.floor(x),zi=Math.floor(z),xf=x-xi,zf=z-zi,u=x
 function fbm(x,z){let s=0,a=1,f=1,n=0;for(let i=0;i<4;i++){s+=vnoise(x*f,z*f)*a;n+=a;a*=.5;f*=2.03}return s/n}
 const V3=THREE.Vector3, tmp=new V3(), tmp2=new V3(), fwd=new V3();
 function store(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
-const HIGH=(store('bp_quality')||'high')==='high';
+const TOUCH=/[?&]touch\b/.test(location.search)||matchMedia('(pointer:coarse)').matches&&navigator.maxTouchPoints>0;if(TOUCH)document.body.classList.add('touch');
+const tip=(k,t)=>TOUCH?t:k;
+const HIGH=(store('bp_quality')||(TOUCH?'low':'high'))==='high';
 const SAVE_KEY='blackpines_save_v2';
 
 // ================================================================ world layout
@@ -188,7 +229,7 @@ for(let i=0;i<20;i++){const p=PONDS[(wr()*PONDS.length)|0],a=wr()*6.283,d=60+wr(
 
 // ================================================================ renderer / scene
 const renderer=new THREE.WebGLRenderer({antialias:HIGH,powerPreference:'high-performance'});
-const PR=HIGH?Math.min(devicePixelRatio,1.25):.85;renderer.setPixelRatio(PR);renderer.setSize(innerWidth,innerHeight);
+const PR=HIGH?Math.min(devicePixelRatio,1.25):TOUCH?1:.85;renderer.setPixelRatio(PR);renderer.setSize(innerWidth,innerHeight);
 renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 const POST=!!(THREE.EffectComposer&&THREE.RenderPass&&THREE.ShaderPass&&THREE.UnrealBloomPass&&THREE.CopyShader);
 if(POST){renderer.outputEncoding=THREE.LinearEncoding;renderer.toneMapping=THREE.NoToneMapping}
@@ -1076,9 +1117,9 @@ function lightWithFlame(onOk){if(has('matches')){take('matches');SFX.match();if(
   msg('No matches.',2.5);return false}
 function use(it){if(!it)return;
   if(it.kind==='water'){S.thirst=Math.min(100,S.thirst+18);SFX.splash();if(rand()<.35){S.poison+=18}msg(pick(['Cold. Tastes of iron.','It tastes like rot and pine needles.','You drink with your hands.']),2.5);return}
-  if(it.kind==='pickup'){give(it.item,it.n);remove(it);SFX.pickup();if(it.item==='compass')msg('A compass. The needle drifts, then settles. Hold G.',4);else if(it.item==='battery')msg('Batteries. Press B to swap them in.',3);
+  if(it.kind==='pickup'){give(it.item,it.n);remove(it);SFX.pickup();if(it.item==='compass')msg(`A compass. The needle drifts, then settles. ${tip('Hold G.','Tap COMP.')}`,4);else if(it.item==='battery')msg(`Batteries. ${tip('Press B','Tap BATT')} to swap them in.`,3);
     else if(it.item==='parka')msg('Someone\'s parka. It still smells like them. You put it on.',4);
-    else if(!W.hint.craft&&(has('stick',3)||has('fiber',3))){W.hint.craft=1;msg('Tab — check what you could make.',3)}return}
+    else if(!W.hint.craft&&(has('stick',3)||has('fiber',3))){W.hint.craft=1;msg(`${tip('Tab','PACK')} — check what you could make.`,3)}return}
   if(it.kind==='tape'){const o=D.tapeObjs.find(o=>o.it===it);if(o)scene.remove(o.g);it.gone=true;S.tapes[it.idx].got=true;S.tapesGot=(S.tapesGot||0)+1;give('tape');
     const n=S.tapesGot,key='tape'+n;S.tapeTexts[key]=tapeText(n);S.notes.push(key);nz(null,{type:'highpass',f:2000,pk:.25,a:.01,dec:.6,wet:0});
     S.dir.next=Math.min(S.dir.next,6);ST.next=Math.min(ST.next,20);readNote(key);setTimeout(()=>voice(pick(['play it','watch it',S.name||'watch']),.4,.3),1500);return}
@@ -1132,7 +1173,7 @@ let panelOpen=false,noteOpen=false;
 function openPanel(){panelOpen=true;$('panel').classList.add('on');document.exitPointerLock?.();renderPanel()}
 function closePanel(){panelOpen=false;$('panel').classList.remove('on');lockPointer()}
 function readNote(key){if(!S.notes.includes(key)){S.notes.push(key);if(key==='bunker')setTimeout(()=>msg(S.day>=5?'North. There is a road north.':'Five nights. It said five nights.',5),600)}
-  const[t,b]=NOTES[key]||S.tapeTexts[key];$('notePaper').innerHTML=`<h3>${t}</h3><p>${b.replace(/</g,'&lt;')}</p><div class="close">E / click to put it down</div>`;noteOpen=true;$('note').classList.add('on');document.exitPointerLock?.()}
+  const[t,b]=NOTES[key]||S.tapeTexts[key];$('notePaper').innerHTML=`<h3>${t}</h3><p>${b.replace(/</g,'&lt;')}</p><div class="close">${tip('E / click','Tap')} to put it down</div>`;noteOpen=true;$('note').classList.add('on');document.exitPointerLock?.()}
 function closeNote(){noteOpen=false;$('note').classList.remove('on');if(panelOpen)return;lockPointer()}
 $('note').addEventListener('click',()=>{closeNote()});
 function body(){const o=[],b=(c,t)=>o.push(`<p class="${c}">${t}</p>`);
@@ -1292,10 +1333,10 @@ function statsUpdate(dt,moving,sprint){
   if(S.wet>.8&&!W.hint.wet){W.hint.wet=1;msg('Soaked. The cold goes straight into you now.',3.5)}if(S.temp<35.6&&!W.hint.cold){W.hint.cold=1;msg('You can\'t stop shaking. Get warm.',3.5)}
   if(S.matchDamp>.5&&!W.hint.match){W.hint.match=1;msg('The matchbox is soft with water.',3)}}
 function moveUpdate(dt){
-  const k=K;let mx=(k.KeyD?1:0)-(k.KeyA?1:0),mz=(k.KeyS?1:0)-(k.KeyW?1:0);const moving=mx||mz;const crouch=!!(k.KeyC||k.ControlLeft);
+  const k=K;let mx=(k.KeyD?1:0)-(k.KeyA?1:0),mz=(k.KeyS?1:0)-(k.KeyW?1:0);if(TC.m>.15){mx=TC.x;mz=TC.y}const moving=mx||mz;const crouch=!!(k.KeyC||k.ControlLeft);
   let sprint=moving&&k.ShiftLeft&&S.stamina>2&&!S.leg&&!crouch&&mz<0;if(S.stamina<=2)W.winded=2;if(W.winded>0){W.winded-=dt;sprint=false}
   const onTrail=pathEdge(player.x,player.z)<.3;W.onTrail=onTrail;W.sprinting=sprint;D.moving=!!moving;
-  const w=weight();let sp=sprint?6:crouch?1.5:3.1;sp*=w>28?.55:w>22?.8:1;if(S.leg)sp*=S.legHeal>0?.72:.45;if(S.fatigue>85)sp*=.85;if(S.temp<34.5)sp*=.8;if(player.wading)sp*=.5;if(onTrail)sp*=1.08;
+  const w=weight();let sp=sprint?6:crouch?1.5:3.1;sp*=w>28?.55:w>22?.8:1;if(S.leg)sp*=S.legHeal>0?.72:.45;if(S.fatigue>85)sp*=.85;if(S.temp<34.5)sp*=.8;if(player.wading)sp*=.5;if(onTrail)sp*=1.08;if(TC.m>.15&&!sprint)sp*=clamp(TC.m*1.25,.45,1);
   if(moving){const l=Math.hypot(mx,mz);mx/=l;mz/=l;const s=Math.sin(player.yaw),c=Math.cos(player.yaw);player.x+=(mx*c+mz*s)*sp*dt;player.z+=(mz*c-mx*s)*sp*dt}
   pushOut(player,.35);
   const ed=Math.max(Math.abs(player.x),Math.abs(player.z));W.edgeProx=clamp((ed-(EDGE-50))/50,0,1);
@@ -1396,7 +1437,7 @@ function updateHUD(dt){const m=$('msg');if(msgTimer>0){msgTimer-=dt;if(msgTimer<
   W.hurt=Math.max(0,W.hurt-dt*.4);$('hurt').style.opacity=Math.max(W.hurt,S.health<35?(.35-S.health/100)*(1+Math.sin(W.clock*3)*.3):0);
   $('cold').style.opacity=clamp((36.4-S.temp)/2.5,0,.9);W.white=Math.max(0,W.white-dt*1.5);$('white').style.opacity=Math.max(W.white,W.lightning>0&&Math.sin(W.lightning*80)>0?.12:0);
   $('vig').style.opacity=.75+S.fatigue/400+S.fear*.2;
-  focus=findFocus();$('prompt').textContent=focus?'E   '+labelFor(focus):'';
+  focus=findFocus();$('prompt').textContent=focus?tip('E   ','')+labelFor(focus):'';
   const cvs=$('compass');if(K.KeyG&&has('compass')){cvs.style.display='block';drawCompass(cvs)}else cvs.style.display='none';
   const osd=$('osd');if(LOOK&&!panelOpen&&!noteOpen){osd.style.display='block';osdPlay-=dt;const pad=n=>String(n).padStart(2,'0');
     if(LOOK===1){const h=Math.floor(S.time),mi=Math.floor(S.time%1*60),dd=new Date(1996,9,26+S.day);
@@ -1421,7 +1462,7 @@ function audioUpdate(dt){if(!ac)return;const now=ac.currentTime,L=ac.listener,p=
   tapeG.gain.setTargetAtTime(D.finale?.06:LOOK?(.012+(W.glitch||0)*.05)*(rand()<(W.glitch||0)*.08?4:1):0,now,.05)}
 
 // ================================================================ input
-const K={};let last=performance.now(),noLock=false;
+const K={};let last=performance.now(),noLock=TOUCH;
 function lockPointer(){if(noLock)return;try{const r=renderer.domElement.requestPointerLock();if(r&&r.catch)r.catch(()=>{noLock=true})}catch(e){noLock=true}}
 document.addEventListener('pointerlockerror',()=>{noLock=true});
 document.addEventListener('pointerlockchange',()=>{if(!document.pointerLockElement&&running&&!panelOpen&&!noteOpen)setPause(true)});
@@ -1432,18 +1473,40 @@ addEventListener('keydown',e=>{if(e.code==='Tab'||e.code==='Space')e.preventDefa
   if(e.code==='Tab'){if(noteOpen)closeNote();if(panelOpen)closePanel();else openPanel();return}
   if(e.code==='KeyE'){if(noteOpen){closeNote();return}if(!panelOpen)use(focus)}
   if(noteOpen||panelOpen)return;
-  if(e.code==='KeyF'){if(S.bat<=0){msg(has('battery')?'Dead. Press B for fresh batteries.':'Dead.',2);return}S.flashOn=!S.flashOn;D.toggles++;nz(null,{type:'highpass',f:3000,pk:.15,dec:.02,wet:0})}
+  if(e.code==='KeyF'){if(S.bat<=0){msg(has('battery')?`Dead. ${tip('Press B','Tap BATT')} for fresh batteries.`:'Dead.',2);return}S.flashOn=!S.flashOn;D.toggles++;nz(null,{type:'highpass',f:3000,pk:.15,dec:.02,wet:0})}
   if(e.code==='KeyV')setLook((LOOK+1)%3);if(e.code==='KeyB')swapBattery();if(e.code==='KeyR')fillBottle();if(e.code==='KeyZ')sleep();
   const eqk={Digit1:'hands',Digit2:'knife',Digit3:'spear',Digit4:'bow',Digit5:'torch',Digit6:'axe',Digit7:'sling',Digit8:'shotgun'}[e.code];if(eqk)equip(eqk)});
 addEventListener('keyup',e=>{K[e.code]=false});
 addEventListener('blur',()=>{for(const k in K)K[k]=false});
 addEventListener('mousemove',e=>{if(!running||paused||panelOpen||noteOpen)return;if(!document.pointerLockElement&&!noLock)return;
   player.tyaw-=e.movementX*.0022;player.tpitch=clamp(player.tpitch-e.movementY*.0022,-1.45,1.45)});
-renderer.domElement.addEventListener('mousedown',e=>{if(!running)return;if(paused){setPause(false);return}if(!document.pointerLockElement&&!noLock){lockPointer();return}if(e.button===0)attack()});
+renderer.domElement.addEventListener('mousedown',e=>{if(!running||TOUCH)return;if(paused){setPause(false);return}if(!document.pointerLockElement&&!noLock){lockPointer();return}if(e.button===0)attack()});
+
+// touch: left side walks, right side looks, buttons stand in for the keys
+const TC={id:null,ox:0,oy:0,x:0,y:0,m:0,look:null,lx:0,ly:0},tcBase=$('tcBase'),tcKnob=$('tcKnob');
+function stickReset(){TC.id=null;TC.x=TC.y=TC.m=0;tcKnob.style.transform='';tcBase.style.removeProperty('--bx');tcBase.style.removeProperty('--by')}
+if(TOUCH){const cv=renderer.domElement,live=()=>running&&!paused&&!panelOpen&&!noteOpen;
+  cv.addEventListener('touchstart',e=>{e.preventDefault();for(const t of e.changedTouches){
+    if(t.clientX<innerWidth*.45&&TC.id===null){TC.id=t.identifier;TC.ox=t.clientX;TC.oy=t.clientY;tcBase.style.setProperty('--bx',t.clientX+'px');tcBase.style.setProperty('--by',t.clientY+'px')}
+    else if(TC.look===null){TC.look=t.identifier;TC.lx=t.clientX;TC.ly=t.clientY}}},{passive:false});
+  cv.addEventListener('touchmove',e=>{e.preventDefault();for(const t of e.changedTouches){
+    if(t.identifier===TC.id){let dx=(t.clientX-TC.ox)/50,dy=(t.clientY-TC.oy)/50;const m=Math.hypot(dx,dy);if(m>1){dx/=m;dy/=m}TC.x=dx;TC.y=dy;TC.m=Math.min(1,m);tcKnob.style.transform=`translate(${dx*42}px,${dy*42}px)`}
+    else if(t.identifier===TC.look){if(live()){player.tyaw-=(t.clientX-TC.lx)*.0042;player.tpitch=clamp(player.tpitch-(t.clientY-TC.ly)*.0042,-1.45,1.45)}TC.lx=t.clientX;TC.ly=t.clientY}}},{passive:false});
+  const up=e=>{for(const t of e.changedTouches){if(t.identifier===TC.id)stickReset();else if(t.identifier===TC.look)TC.look=null}};
+  cv.addEventListener('touchend',up);cv.addEventListener('touchcancel',up);
+  const press=c=>{dispatchEvent(new KeyboardEvent('keydown',{code:c}));dispatchEvent(new KeyboardEvent('keyup',{code:c}))},
+    swap=()=>{const o=['hands','knife','spear','bow','torch','axe','sling','shotgun'].filter(k=>k==='hands'||(k==='torch'?S.torchT>0||has('torch')||has('rtorch'):has(k)));equip(o[(o.indexOf(S.eq)+1)%o.length])};
+  for(const b of document.querySelectorAll('#tc button'))b.addEventListener('pointerdown',e=>{e.preventDefault();if(!S||!running)return;
+    if(b.id==='tP'){if(!panelOpen&&!noteOpen)setPause(true);return}if(!live())return;
+    if(b.id==='tH'){attack();return}if(b.dataset.t){K[b.dataset.t]=!K[b.dataset.t];return}if(b.dataset.k==='Swap'){swap();return}press(b.dataset.k)});
+  $('panelX').onclick=closePanel;
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&running&&!paused)setPause(true)});
+  addEventListener('blur',stickReset);
+  setInterval(()=>{document.body.classList.toggle('play',!!S&&running);for(const b of document.querySelectorAll('#tc [data-t]'))b.classList.toggle('on',!!K[b.dataset.t]);if(S)document.querySelector('[data-k=KeyF]').classList.toggle('on',!!S.flashOn);$('tU').classList.toggle('ready',!!focus)},150)}
 
 // ================================================================ game start
 function buildFixed(){const s=makeStructure('fire',SITES.start.x+1,SITES.start.z-1);s.builtin=1;s.char=1;const c=makeStructure('fire',SITES.camp.x+1.5,SITES.camp.z+.5);c.builtin=1}
-function begin(cont){initAudio();grainOn=$('optGrain').checked;$('optGrain2').checked=grainOn;grainC.style.display=grainOn&&!POST?'block':'none';
+function begin(cont){initAudio();if(TOUCH){try{document.documentElement.requestFullscreen?.().catch(()=>{})}catch(e){}}grainOn=$('optGrain').checked;$('optGrain2').checked=grainOn;grainC.style.display=grainOn&&!POST?'block':'none';
   let data=null;if(cont){try{data=JSON.parse(store(SAVE_KEY))}catch(e){data=null}}
   S=data?Object.assign(freshState(),data.S):freshState($('pname').value.trim());if(!data)S.name=$('pname').value.trim();
   W.timers={snap:12,creak:5,whistle:90,scream:150,chains:200,whisper:40,voice:120,footsteps:90,fake:120,trees:60,steal:300,prints:100,signs:90};
@@ -1460,7 +1523,7 @@ function begin(cont){initAudio();grainOn=$('optGrain').checked;$('optGrain2').ch
   if(S.eq!=='hands'){const e=S.eq;S.eq='hands';if(e!=='torch')equip(e)}
   $('title').classList.remove('on');running=true;paused=false;lockPointer();last=performance.now();
   if(!data){setTimeout(()=>msg('You wake beside a dead fire. You don\'t remember walking here.',5),1200);setTimeout(()=>msg('Cold. The light is going. Fire first — sticks, stones.',5),7500);
-    setTimeout(()=>msg('E  take   ·   Tab  check yourself   ·   F  flashlight',6),14000);
+    setTimeout(()=>msg(tip('E  take   ·   Tab  check yourself   ·   F  flashlight','USE  take   ·   PACK  check yourself   ·   LIGHT  flashlight'),6),14000);
     setTimeout(()=>msg('Far off in the trees, a small red light is blinking. Like a camera left recording.',6),24000)}
   else setTimeout(()=>msg(`Day ${S.day}. You are still here.`,4),800)}
 $('bNew').onclick=()=>{store(SAVE_KEY,null);begin(false)};$('bCont').onclick=()=>begin(true);
